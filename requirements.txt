@@ -8,6 +8,5 @@ PyJWT==2.10.1
 python-dotenv==1.2.1
 sqlparse==0.5.4
 tzdata==2025.3
-gunicorn==21.2.0
 dj-database-url==2.1.0
 gunicorn==21.2.0
