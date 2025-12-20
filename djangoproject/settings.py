@@ -48,6 +48,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",      # Dev React
+    "https://mejestic-sports-shop.netlify.app",  # Production React
+]
 ROOT_URLCONF = 'djangoproject.urls'
 
 TEMPLATES = [
