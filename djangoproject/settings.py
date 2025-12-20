@@ -33,11 +33,14 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG", "False") == "True"
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 
-
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "mejestic-backend.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 CSRF_TRUSTED_ORIGINS = [
     "https://mejestic-backend-1.onrender.com",
 ]
@@ -91,7 +94,11 @@ WSGI_APPLICATION = 'djangoproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+
+
 if DEBUG:
+    # Local development: use SQLite
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -99,22 +106,14 @@ if DEBUG:
         }
     }
 else:
+    # Production: use PostgreSQL on Render
     DATABASES = {
-        "default": dj_database_url.parse(
-            os.environ.get("DATABASE_URL"),
+        "default": dj_database_url.config(
+            default=os.getenv("DATABASE_URL"),
             conn_max_age=600,
             ssl_require=True
         )
     }
-
-# DATABASES = {
-#  "default": dj_database_url.config(
-# default=os.getenv("DATABASE_URL"),
-# conn_max_age=600,
-# ssl_require=True  
-#    	 )
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -150,7 +149,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
